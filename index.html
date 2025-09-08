@@ -7,7 +7,7 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <!-- GSAP -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js?v=1"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
 
@@ -273,7 +273,7 @@
         <aside class="contact-side" aria-label="Contact details">
           <div><strong>Contact</strong></div>
           <div><i class="fa-solid fa-phone"></i> &nbsp;<a class="contact-link" href="tel:+919876543210">+91 99888 21791</a></div>
-          <div><i class="fa-solid fa-envelope"></i> &nbsp;<a class="contact-link" href="mailto:atul.lourmar1797@gmall.com ">atul.lourmar1797@gmall.com </a></div>
+          <div><i class="fa-solid fa-envelope"></i> &nbsp;<a class="contact-link" href="mailto:atul.kumar1797@gmall.com">atul.kumar1797@gmall.com</a></div>
           <div><i class="fa-brands fa-linkedin"></i> &nbsp;<a class="contact-link" href="https://www.linkedin.com/in/atul-kumar97/" target="_blank" rel="noopener">linkedin.com/in/atul-kumar97/</a></div>
           <div style="margin-top:8px;color:var(--muted)">I reply fast — typically within 24 hours.</div>
         </aside>
@@ -293,265 +293,329 @@
     <div style="max-width:1200px;margin:0 auto;padding:22px 20px;color:#9aa7b8">© 2025 Atul Kumar — Professional Video Editor</div>
   </footer>
 
-  <script>
-    // Loading animation + init
-    try{ gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);}catch(e){console.warn(e)}
-    window.addEventListener('load', ()=>{gsap.to('#lp',{width:'100%',duration:1.1,ease:'power2.out',onComplete:()=>{gsap.to('#loading',{opacity:0,duration:.35,display:'none',onComplete:()=>{document.getElementById('loading').style.display='none';init();}})}})});
+   <script>
+  // Loading animation + init
+  try{ gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);}catch(e){console.warn(e)}
+  window.addEventListener('load', ()=>{
+    gsap.to('#lp',{width:'100%',duration:1.1,ease:'power2.out',onComplete:()=>{
+      gsap.to('#loading',{opacity:0,duration:.35,display:'none',onComplete:()=>{
+        const ld = document.getElementById('loading');
+        if(ld) ld.style.display='none';
+        init();
+      }})
+    }});
+  });
 
-    // Software/tools (static list)
-    const TOOLS = [
-      {name:'Adobe Premiere Pro', use:'Editing & timeline assembly', exp:'5+ yrs', cat:'Editing'},
-      {name:'Adobe After Effects', use:'Motion graphics & VFX', exp:'4+ yrs', cat:'Motion'},
-      {name:'DaVinci Resolve', use:'Color grading & finishing', exp:'3+ yrs', cat:'Color'},
-      {name:'Adobe Photoshop', use:'Thumbnails & assets, compositing', exp:'5+ yrs', cat:'Design'},
-      {name:'Adobe Illustrator', use:'Vector assets & thumbnails', exp:'3+ yrs', cat:'Design'}
-    ];
+  // Software/tools (static list)
+  const TOOLS = [
+    {name:'Adobe Premiere Pro', use:'Editing & timeline assembly', exp:'5+ yrs', cat:'Editing'},
+    {name:'Adobe After Effects', use:'Motion graphics & VFX', exp:'4+ yrs', cat:'Motion'},
+    {name:'DaVinci Resolve', use:'Color grading & finishing', exp:'3+ yrs', cat:'Color'},
+    {name:'Adobe Photoshop', use:'Thumbnails & assets, compositing', exp:'5+ yrs', cat:'Design'},
+    {name:'Adobe Illustrator', use:'Vector assets & thumbnails', exp:'3+ yrs', cat:'Design'}
+  ];
 
-    function escapeHtml(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
-    function renderTools(){
-      const grid = document.getElementById('softwareGrid');
-      grid.innerHTML='';
-      TOOLS.forEach((t,i)=>{
-        const el = document.createElement('div'); el.className='software-card';
-        el.innerHTML = `
-          <div style="display:flex;justify-content:space-between;align-items:center">
-            <div style="font-weight:800">${escapeHtml(t.name)}</div>
-            <div style="font-size:13px;color:var(--muted)">${escapeHtml(t.exp)}</div>
-          </div>
-          <div class="software-usage" style="color:var(--muted);font-size:14px">${escapeHtml(t.use)}</div>
-          <div class="software-meta"><span class="chip">${escapeHtml(t.cat)}</span></div>
-        `;
-        grid.appendChild(el);
-        gsap.to(el,{opacity:1,y:0,duration:0.45,delay:i*0.06,ease:'power2.out'});
+  function escapeHtml(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+  function renderTools(){
+    const grid = document.getElementById('softwareGrid');
+    if(!grid) return;
+    grid.innerHTML='';
+    TOOLS.forEach((t,i)=>{
+      const el = document.createElement('div'); el.className='software-card';
+      el.innerHTML = `
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div style="font-weight:800">${escapeHtml(t.name)}</div>
+          <div style="font-size:13px;color:var(--muted)">${escapeHtml(t.exp)}</div>
+        </div>
+        <div class="software-usage" style="color:var(--muted);font-size:14px">${escapeHtml(t.use)}</div>
+        <div class="software-meta"><span class="chip">${escapeHtml(t.cat)}</span></div>
+      `;
+      grid.appendChild(el);
+      gsap.to(el,{opacity:1,y:0,duration:0.45,delay:i*0.06,ease:'power2.out'});
+    });
+  }
+
+  // portfolio links (user-provided)
+  const longFormLinks = [
+    "https://youtu.be/Hxi8zM4mC5Q",
+    "https://youtu.be/PfjN02iG0iI",
+    "https://youtu.be/G1XVNh4wpQ4",
+    "https://youtu.be/-BaW_48jvKM",
+    "https://youtu.be/ipwUfL_wvVQ",
+    "https://youtu.be/VyE7kFRFQ5o?si=mbKWKAsM942iaj3G",
+    "https://youtu.be/uVNiX-zysTI?si=oIvdsbvVFKXkKy4-",
+    "https://youtu.be/_-KOs_S80Ic?si=wA2_M98Zv2dcGlTc"
+  ];
+
+  const shortYouTubeLinks = [
+    "https://youtube.com/shorts/mUnyeeQze90?si=5ORx5e4nqY1sivGQ",
+    "https://youtube.com/shorts/sOwHTs4L-_c?si=dOinU_shL7sCGZ_n"
+  ];
+
+  const instagramLinks = [
+    "https://www.instagram.com/reel/DIWLi06yysN/",
+    "https://www.instagram.com/reel/DFh78z3u-wR/",
+    "https://www.instagram.com/reel/DOGc-NeD49a/",
+    "https://www.instagram.com/reel/C-8HXmdPEQZ/"
+  ];
+
+  function getYoutubeID(url){
+    try{
+      const u = new URL(url);
+      if(u.hostname.includes('youtu.be')) return u.pathname.slice(1).split('?')[0];
+      if(u.hostname.includes('youtube.com')){
+        if(u.pathname.startsWith('/shorts/')) return u.pathname.split('/').pop();
+        const qp = u.searchParams;
+        if(qp.get('v')) return qp.get('v');
+        const parts = u.pathname.split('/');
+        return parts[parts.length-1] || null;
+      }
+    }catch(e){}
+    return null;
+  }
+
+  function ensureInstagramScript(callback){
+    if(window.instgrm && window.instgrm.Embeds){
+      try{ window.instgrm.Embeds.process(); }catch(e){}
+      if(callback) callback();
+      return;
+    }
+    if(document.getElementById('ig-embed-js')){
+      document.getElementById('ig-embed-js').addEventListener('load', ()=>{ try{ window.instgrm.Embeds.process(); }catch(e){} if(callback) callback(); });
+      return;
+    }
+    const s = document.createElement('script');
+    s.id = 'ig-embed-js';
+    s.async = true;
+    s.src = 'https://www.instagram.com/embed.js';
+    s.onload = ()=>{ try{ window.instgrm.Embeds.process(); }catch(e){} if(callback) callback(); };
+    s.onerror = ()=>{ console.warn('Instagram embed script failed to load'); if(callback) callback(); };
+    document.body.appendChild(s);
+  }
+
+  function buildGrid(){
+    const longGrid = document.getElementById('long');
+    const shortGrid = document.getElementById('short');
+    const instaGrid = document.getElementById('insta');
+    if(longGrid) longGrid.innerHTML = '';
+    if(shortGrid) shortGrid.innerHTML = '';
+    if(instaGrid) instaGrid.innerHTML = '';
+
+    (longFormLinks||[]).forEach((link,i)=>{
+      const id = getYoutubeID(link);
+      const thumb = id ? `https://img.youtube.com/vi/${id}/maxresdefault.jpg` : 'https://picsum.photos/seed/long'+i+'/800/450';
+      const card = document.createElement('div'); card.className='video-card';
+      card.innerHTML = `
+        <div class="video-thumb long"><img src="${thumb}" alt="Long form ${i+1}"></div>
+        <div class="video-info"><strong>Long Form — Project ${i+1}</strong><div style="color:var(--muted);margin-top:6px">${escapeHtml(link)}</div></div>
+      `;
+      card.addEventListener('click', ()=>openVideoModalByUrl(link));
+      if(longGrid) longGrid.appendChild(card);
+    });
+
+    (shortYouTubeLinks||[]).forEach((link,i)=>{
+      const id = getYoutubeID(link);
+      const thumbCandidates = id ? [`https://img.youtube.com/vi/${id}/maxresdefault.jpg`,`https://img.youtube.com/vi/${id}/hqdefault.jpg`] : [`https://picsum.photos/seed/short${i}/600/900`];
+      const card = document.createElement('div'); card.className='video-card';
+      card.innerHTML = `
+        <div class="video-thumb portrait">
+          <img data-src="${thumbCandidates[0]}" src="${thumbCandidates[0]}" alt="Short ${i+1}" onerror="(function(el){ if(el.dataset.fallback==='1') return; el.dataset.fallback='1'; el.src='${thumbCandidates[1]||thumbCandidates[0]}'; })(this)">
+        </div>
+        <div class="video-info"><strong>Short — YouTube Shorts</strong><div style="color:var(--muted);margin-top:6px">${escapeHtml(link)}</div></div>
+      `;
+      card.addEventListener('click', ()=>openVideoModalByUrl(link));
+      if(shortGrid) shortGrid.appendChild(card);
+    });
+
+    (instagramLinks||[]).forEach((link,i)=>{
+      const instCard = document.createElement('div'); instCard.className='instagram-card';
+      instCard.style.width='100%';
+      try{ const u=new URL(link); u.search=''; link = u.toString(); }catch(e){}
+      const wrapper = document.createElement('div'); wrapper.className='instagram-wrapper';
+      wrapper.style.width='100%'; wrapper.style.display='flex'; wrapper.style.justifyContent='center';
+      const block = document.createElement('blockquote');
+      block.className = 'instagram-media';
+      block.setAttribute('data-instgrm-permalink', link);
+      block.setAttribute('data-instgrm-version', '14');
+      block.style.margin = '0'; block.style.padding = '0 0 12px 0';
+      block.innerHTML = `<a href="${escapeHtml(link)}" target="_blank" rel="noopener" style="display:block;padding:12px 0;text-align:center;text-decoration:none;color:inherit">View on Instagram</a>`;
+      wrapper.appendChild(block);
+      const caption = document.createElement('div');
+      caption.style.padding='8px'; caption.style.fontSize='13px'; caption.style.color='var(--muted)';
+      caption.innerHTML = `<strong>Instagram Reel</strong><div style="margin-top:6px;word-break:break-all">${escapeHtml(link)}</div>`;
+      instCard.appendChild(wrapper);
+      instCard.appendChild(caption);
+      if(instaGrid) instaGrid.appendChild(instCard);
+    });
+
+    ensureInstagramScript(()=>{ try{ if(window.instgrm && window.instgrm.Embeds) window.instgrm.Embeds.process(); }catch(e){console.warn(e)} });
+
+    const linksList = document.getElementById('linksList');
+    if (linksList) {
+      linksList.innerHTML = '';
+      const allLinks = [...(longFormLinks||[]), ...(shortYouTubeLinks||[]), ...(instagramLinks||[])];
+      allLinks.forEach(l => {
+        const a = document.createElement('a');
+        a.href = l;
+        a.target = '_blank';
+        a.rel = 'noopener';
+        a.style.cssText = 'padding:8px 12px;border-radius:8px;background:#fff;border:1px solid #eef2ff;display:inline-block;text-decoration:none;color:var(--accent1);font-weight:700';
+        a.innerText = (l.includes('instagram.com') ? 'IG Reel' : l.includes('/shorts/') ? 'YouTube Short' : 'Long Form') + ' • Open';
+        linksList.appendChild(a);
       });
     }
+  }
 
-    // portfolio links (user-provided)
-    const longFormLinks = [
-      "https://youtu.be/Hxi8zM4mC5Q",
-      "https://youtu.be/PfjN02iG0iI",
-      "https://youtu.be/G1XVNh4wpQ4",
-      "https://youtu.be/-BaW_48jvKM",
-      "https://youtu.be/ipwUfL_wvVQ",
-      "https://youtu.be/VyE7kFRFQ5o?si=mbKWKAsM942iaj3G",
-      "https://youtu.be/uVNiX-zysTI?si=oIvdsbvVFKXkKy4-",
-      "https://youtu.be/_-KOs_S80Ic?si=wA2_M98Zv2dcGlTc"
-    ];
-
-    const shortYouTubeLinks = [
-      "https://youtube.com/shorts/mUnyeeQze90?si=5ORx5e4nqY1sivGQ",
-      "https://youtube.com/shorts/sOwHTs4L-_c?si=dOinU_shL7sCGZ_n"
-    ];
-
-    const instagramLinks = [
-      "https://www.instagram.com/reel/DIWLi06yysN/",
-      "https://www.instagram.com/reel/DFh78z3u-wR/",
-      "https://www.instagram.com/reel/DOGc-NeD49a/",
-      "https://www.instagram.com/reel/C-8HXmdPEQZ/"
-    ];
-
-    // helper to extract YouTube ID robustly
-    function getYoutubeID(url){
-      try{
-        const u = new URL(url);
-        if(u.hostname.includes('youtu.be')) return u.pathname.slice(1).split('?')[0];
-        if(u.hostname.includes('youtube.com')){
-          if(u.pathname.startsWith('/shorts/')) return u.pathname.split('/').pop();
-          const qp = u.searchParams;
-          if(qp.get('v')) return qp.get('v');
-          const parts = u.pathname.split('/');
-          return parts[parts.length-1] || null;
-        }
-      }catch(e){}
-      return null;
+  // modal open by url (handles YouTube & other links)
+  function openVideoModalByUrl(url){
+    const iframe = document.getElementById('videoFrame');
+    const content = document.getElementById('videoModalContent');
+    if(!iframe || !content){
+      // fallback: open in new tab
+      window.open(url, '_blank', 'noopener');
+      return;
+    }
+    let embed = url;
+    const yid = getYoutubeID(url);
+    const isShort = /\/shorts\//.test(url);
+    if(yid){
+      // use nocookie for better privacy, but autoplay needs standard embed - keep standard for autoplay
+      embed = `https://www.youtube.com/embed/${yid}?autoplay=1&rel=0`;
+    } else if(url.includes('instagram.com')){
+      // open instagram link in new tab since iframe embed won't work reliably
+      window.open(url, '_blank', 'noopener');
+      return;
     }
 
-    // load instagram embed script (idempotent)
-    function ensureInstagramScript(callback){
-      if(window.instgrm && window.instgrm.Embeds){
-        try{ window.instgrm.Embeds.process(); }catch(e){}
-        if(callback) callback();
-        return;
-      }
-      if(document.getElementById('ig-embed-js')){
-        document.getElementById('ig-embed-js').addEventListener('load', ()=>{ try{ window.instgrm.Embeds.process(); }catch(e){} if(callback) callback(); });
-        return;
-      }
-      const s = document.createElement('script');
-      s.id = 'ig-embed-js';
-      s.async = true;
-      s.src = 'https://www.instagram.com/embed.js';
-      s.onload = ()=>{ try{ window.instgrm.Embeds.process(); }catch(e){} if(callback) callback(); };
-      s.onerror = ()=>{ console.warn('Instagram embed script failed to load'); if(callback) callback(); };
-      document.body.appendChild(s);
+    // compute modal size so portrait shorts look correct and match instagram card feel
+    const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+    const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
+    if(isShort){
+      const h = Math.min(vh * 0.85, 1000);
+      const w = Math.min(vw * 0.95, Math.round(h * (9/16)));
+      content.style.width = w + 'px';
+      content.style.height = h + 'px';
+    } else {
+      const w = Math.min(vw * 0.9, 1200);
+      const h = Math.round(w * 9/16);
+      content.style.width = w + 'px';
+      content.style.height = h + 'px';
     }
 
-    function buildGrid(){
-      const longGrid = document.getElementById('long');
-      const shortGrid = document.getElementById('short');
-      const instaGrid = document.getElementById('insta');
-      longGrid.innerHTML = '';
-      shortGrid.innerHTML = '';
-      instaGrid.innerHTML = '';
+    iframe.src = embed;
+    const modal = document.getElementById('videoModal');
+    if(modal){
+      modal.style.visibility='visible'; modal.style.opacity='1'; modal.setAttribute('aria-hidden','false');
+      document.body.style.overflow='hidden';
+      // focus close button for accessibility if present
+      const closeBtn = document.getElementById('closeModal');
+      if(closeBtn) closeBtn.focus();
+    } else {
+      // fallback: open in new tab
+      window.open(url, '_blank', 'noopener');
+    }
+  }
 
-      longFormLinks.forEach((link,i)=>{
-        const id = getYoutubeID(link);
-        const thumb = id ? `https://img.youtube.com/vi/${id}/maxresdefault.jpg` : 'https://picsum.photos/seed/long'+i+'/800/450';
-        const card = document.createElement('div'); card.className='video-card';
-        card.innerHTML = `
-          <div class="video-thumb long"><img src="${thumb}" alt="Long form ${i+1}"></div>
-          <div class="video-info"><strong>Long Form — Project ${i+1}</strong><div style="color:var(--muted);margin-top:6px">${escapeHtml(link)}</div></div>
-        `;
-        card.addEventListener('click', ()=>openVideoModalByUrl(link));
-        longGrid.appendChild(card);
-      });
+  function closeVideoModal(){
+    const modal=document.getElementById('videoModal');
+    const iframe=document.getElementById('videoFrame');
+    if(iframe) iframe.src='';
+    if(modal){
+      modal.style.opacity='0';
+      modal.style.visibility='hidden';
+      modal.setAttribute('aria-hidden','true');
+    }
+    document.body.style.overflow='';
+  }
 
-      shortYouTubeLinks.forEach((link,i)=>{
-        const id = getYoutubeID(link);
-        const thumbCandidates = id ? [`https://img.youtube.com/vi/${id}/maxresdefault.jpg`,`https://img.youtube.com/vi/${id}/hqdefault.jpg`] : [`https://picsum.photos/seed/short${i}/600/900`];
-        const card = document.createElement('div'); card.className='video-card';
-        card.innerHTML = `
-          <div class="video-thumb portrait">
-            <img data-src="${thumbCandidates[0]}" src="${thumbCandidates[0]}" alt="Short ${i+1}" onerror="(function(el){ if(el.dataset.fallback==='1') return; el.dataset.fallback='1'; el.src='${thumbCandidates[1]||thumbCandidates[0]}'; })(this)">
-          </div>
-          <div class="video-info"><strong>Short — YouTube Shorts</strong><div style="color:var(--muted);margin-top:6px">${escapeHtml(link)}</div></div>
-        `;
-        card.addEventListener('click', ()=>openVideoModalByUrl(link));
-        shortGrid.appendChild(card);
-      });
+  // init interactions
+  function init(){
+    renderTools();
+    buildGrid();
 
-      // Instagram embeds: render cards that match the same grid sizing
-      instagramLinks.forEach((link,i)=>{
-        const instCard = document.createElement('div'); instCard.className='instagram-card';
-        instCard.style.width='100%';
-
-        // sanitize permalink: remove tracking params
-        try{ const u=new URL(link); u.search=''; link = u.toString(); }catch(e){}
-
-        const wrapper = document.createElement('div'); wrapper.className='instagram-wrapper';
-        wrapper.style.width='100%'; wrapper.style.display='flex'; wrapper.style.justifyContent='center';
-
-        const block = document.createElement('blockquote');
-        block.className = 'instagram-media';
-        block.setAttribute('data-instgrm-permalink', link);
-        block.setAttribute('data-instgrm-version', '14');
-        block.style.margin = '0'; block.style.padding = '0 0 12px 0';
-
-        // fallback link text (will be replaced by IG script when available)
-        block.innerHTML = `
-          <a href="${escapeHtml(link)}" target="_blank" rel="noopener" style="display:block;padding:12px 0;text-align:center;text-decoration:none;color:inherit">View on Instagram</a>
-        `;
-
-        wrapper.appendChild(block);
-        const caption = document.createElement('div');
-        caption.style.padding='8px'; caption.style.fontSize='13px'; caption.style.color='var(--muted)';
-        caption.innerHTML = `<strong>Instagram Reel</strong><div style="margin-top:6px;word-break:break-all">${escapeHtml(link)}</div>`;
-
-        instCard.appendChild(wrapper);
-        instCard.appendChild(caption);
-        instaGrid.appendChild(instCard);
-      });
-
-      // trigger instagram embed processing (idempotent)
-      ensureInstagramScript(()=>{
-        try{ if(window.instgrm && window.instgrm.Embeds) window.instgrm.Embeds.process(); }catch(e){console.warn(e)}
-      });
-
-      // build links-only list for backup / quick open
-      const linksList = document.getElementById('linksList');
-      if (linksList) {
-        linksList.innerHTML = '';
-        const allLinks = [...longFormLinks, ...shortYouTubeLinks, ...instagramLinks];
-        allLinks.forEach(l => {
-          const a = document.createElement('a');
-          a.href = l;
-          a.target = '_blank';
-          a.rel = 'noopener';
-          a.style.cssText = 'padding:8px 12px;border-radius:8px;background:#fff;border:1px solid #eef2ff;display:inline-block;text-decoration:none;color:var(--accent1);font-weight:700';
-          a.innerText = (l.includes('instagram.com') ? 'IG Reel' : l.includes('/shorts/') ? 'YouTube Short' : 'Long Form') + ' • Open';
-          linksList.appendChild(a);
-        });
+    // Hero showreel uses first long video (fallback to short if empty)
+    const heroTarget = shortYouTubeLinks[1] || longFormLinks[0];
+    if(heroTarget){
+      const heroImg = document.getElementById('mainShowImg');
+      if(heroImg){
+        heroImg.src = (getYoutubeID(heroTarget) ? `https://img.youtube.com/vi/${getYoutubeID(heroTarget)}/maxresdefault.jpg` : 'https://picsum.photos/420/740');
       }
     }
 
-    // modal open by url (handles YouTube & other links)
-    function openVideoModalByUrl(url){
-      const iframe = document.getElementById('videoFrame');
-      const content = document.getElementById('videoModalContent');
-      let embed = url;
-      const yid = getYoutubeID(url);
-      const isShort = /\/shorts\//.test(url);
-      if(yid){
-        embed = `https://www.youtube.com/embed/${yid}?autoplay=1&rel=0`;
-      } else if(url.includes('instagram.com')){
-        window.open(url, '_blank', 'noopener');
-        return;
-      }
-
-      // compute modal size so portrait shorts look correct and match instagram card feel
-      const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
-      const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
-      if(isShort){
-        const h = Math.min(vh * 0.85, 1000);
-        const w = Math.min(vw * 0.95, Math.round(h * (9/16)));
-        content.style.width = w + 'px';
-        content.style.height = h + 'px';
-      } else {
-        const w = Math.min(vw * 0.9, 1200);
-        const h = Math.round(w * 9/16);
-        content.style.width = w + 'px';
-        content.style.height = h + 'px';
-      }
-
-      iframe.src = embed;
-      const modal = document.getElementById('videoModal');
-      modal.style.visibility='visible'; modal.style.opacity='1'; modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden';
-    }
-
-    function closeVideoModal(){ const modal=document.getElementById('videoModal'); const iframe=document.getElementById('videoFrame'); if(iframe) iframe.src=''; modal.style.opacity='0'; modal.style.visibility='hidden'; modal.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
-
-    // init interactions
-    function init(){
-      renderTools();
-      buildGrid();
-
-      // Hero showreel uses first long video (fallback to short if empty)
-      const heroTarget = shortYouTubeLinks[1];
-      if(heroTarget){
-        document.getElementById('mainShowImg').src = (getYoutubeID(heroTarget) ? `https://img.youtube.com/vi/${getYoutubeID(heroTarget)}/maxresdefault.jpg` : 'https://picsum.photos/420/740');
-      }
-
-      document.getElementById('mainShowreel').addEventListener('click', ()=>{
+    const mainShowreel = document.getElementById('mainShowreel');
+    if(mainShowreel && heroTarget){
+      mainShowreel.addEventListener('click', ()=>{
         if(getYoutubeID(heroTarget)) openVideoModalByUrl(heroTarget);
         else window.open(heroTarget, '_blank', 'noopener');
       });
+    }
 
-      // reveals
+    // reveals
+    try{
       gsap.utils.toArray('.section-title').forEach(el=>gsap.fromTo(el,{opacity:0,y:20},{opacity:1,y:0,duration:0.6,scrollTrigger:{trigger:el,start:'top 90%'}}));
       gsap.utils.toArray('.video-card').forEach((el,i)=>gsap.fromTo(el,{opacity:0,y:20},{opacity:1,y:0,duration:0.6,delay:i*0.04,scrollTrigger:{trigger:el,start:'top 90%'}}));
+    }catch(e){ /* gsap reveal failures shouldn't break rest */ }
 
-      // nav smooth scroll
-      document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{ e.preventDefault(); const t=document.querySelector(a.getAttribute('href')); if(t){gsap.to(window,{duration:.8,scrollTo:{y:t,offsetY:72},ease:'power2.inOut'})} }));
+    // nav smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{
+      e.preventDefault();
+      const t=document.querySelector(a.getAttribute('href'));
+      if(t){ gsap.to(window,{duration:.8,scrollTo:{y:t,offsetY:72},ease:'power2.inOut'})}
+    }));
 
-      // tabs
-      document.querySelectorAll('.tab').forEach(btn=>btn.addEventListener('click', ()=>{
-        document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
-        btn.classList.add('active');
-        const tab = btn.getAttribute('data-tab');
-        document.getElementById('long').style.display = tab==='long' ? '' : 'none';
-        document.getElementById('short').style.display = tab==='short' ? '' : 'none';
-        document.getElementById('insta').style.display = tab==='insta' ? '' : 'none';
-      }));
+    // tabs
+    document.querySelectorAll('.tab').forEach(btn=>btn.addEventListener('click', ()=>{
+      document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      const tab = btn.getAttribute('data-tab');
+      const longEl = document.getElementById('long');
+      const shortEl = document.getElementById('short');
+      const instaEl = document.getElementById('insta');
+      if(longEl) longEl.style.display = tab==='long' ? '' : 'none';
+      if(shortEl) shortEl.style.display = tab==='short' ? '' : 'none';
+      if(instaEl) instaEl.style.display = tab==='insta' ? '' : 'none';
+    }));
 
-      // contact form (no backend)
-      document.getElementById('contactForm').addEventListener('submit', (e)=>{ e.preventDefault(); const btn = e.target.querySelector('button'); const old = btn.textContent; gsap.to(btn,{scale:.96,duration:.08,yoyo:true,repeat:1,onComplete:()=>{btn.textContent='Message Sent!'; setTimeout(()=>{btn.textContent=old; e.target.reset()},1600)}}) });
-
-      // modal handlers
-      document.getElementById('closeModal').addEventListener('click', closeVideoModal);
-      document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeVideoModal(); })
-      document.getElementById('videoModal').addEventListener('click', (e)=>{ if(e.target === document.getElementById('videoModal')) closeVideoModal(); })
+    // contact form (no backend) - attach only if form exists
+    const contactForm = document.getElementById('contactForm');
+    if(contactForm){
+      contactForm.addEventListener('submit', (e)=>{
+        e.preventDefault();
+        const btn = e.target.querySelector('button');
+        if(!btn) return;
+        const old = btn.textContent;
+        gsap.to(btn,{scale:.96,duration:.08,yoyo:true,repeat:1,onComplete:()=>{
+          btn.textContent='Message Sent!';
+          setTimeout(()=>{ btn.textContent=old; e.target.reset(); },1600);
+        }});
+      });
     }
-  </script>
+
+    // modal handlers - attach safely
+    const closeBtn = document.getElementById('closeModal');
+    if(closeBtn) closeBtn.addEventListener('click', closeVideoModal);
+
+    // Escape key closes modal
+    document.addEventListener('keydown', e=>{
+      if(e.key==='Escape') closeVideoModal();
+    });
+
+    // clicking on overlay (outside content) closes modal
+    const modal = document.getElementById('videoModal');
+    if(modal){
+      modal.addEventListener('click', (e)=>{
+        // only close when clicking directly on the overlay (not inside the content)
+        if(e.target && e.target.id === 'videoModal'){
+          closeVideoModal();
+        }
+      });
+    }
+
+    // ensure close button is focusable for keyboard users
+    if(closeBtn) closeBtn.setAttribute('aria-label','Close video');
+  }
+</script>
+
 
 </body>
 </html>
