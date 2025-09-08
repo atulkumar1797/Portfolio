@@ -1,0 +1,557 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Atul Kumar — Video Editor & Creative Professional</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
+
+  <style>
+    /* Reset + tokens */
+    *{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#fbfbff;--muted:#64748b;--text:#0f1724;
+      --accent1:#7c3aed;--accent2:#ec4899;
+      --accent-gradient: linear-gradient(135deg,var(--accent1),var(--accent2));
+      --glass-border: rgba(0,0,0,0.06);--card:#fff;
+    }
+    body{font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial;line-height:1.6;color:var(--text);background:linear-gradient(180deg,#fff,#fbfbff);overflow-x:hidden}
+
+    /* Nav / Header */
+    nav{position:fixed;left:0;right:0;top:0;height:76px;display:flex;align-items:center;z-index:1200;padding:0 28px;
+        background:linear-gradient(180deg,rgba(255,255,255,0.88),rgba(255,255,255,0.6));backdrop-filter: blur(10px);border-bottom:1px solid var(--glass-border)}
+    .nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;width:100%}
+    .brand{display:flex;align-items:center;gap:12px;font-weight:900}
+    .logo{width:48px;height:48px;border-radius:10px;background:var(--accent-gradient);display:inline-flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:18px;box-shadow:0 8px 30px rgba(124,58,237,0.12)}
+    .brand-text{display:flex;flex-direction:column;line-height:1}
+    .brand-text .name{font-size:1rem}
+    .brand-text .role{font-size:12px;color:var(--muted);font-weight:700}
+
+    .nav-actions{display:flex;gap:12px;align-items:center}
+    .nav-links{display:flex;gap:14px;align-items:center}
+    .nav-links a{color:var(--muted);text-decoration:none;font-weight:700}
+    .cta-btn{padding:10px 14px;border-radius:10px;font-weight:800;text-decoration:none;display:inline-block;border:0;cursor:pointer}
+    .btn-primary{background:var(--accent1);color:#fff;box-shadow:0 14px 40px rgba(124,58,237,0.10) }
+    .btn-outline{border:1px solid #eef2ff;background:transparent;color:var(--muted)}
+
+    /* Layout */
+    main{max-width:1200px;margin:120px auto 80px;padding:0 20px}
+    section{padding:48px 0}
+    .section-title{font-size:1.5rem;font-weight:900;margin-bottom:8px}
+    .section-sub{color:var(--muted);margin-bottom:18px}
+
+    /* Hero */
+    .hero{display:grid;grid-template-columns:1fr 420px;gap:36px;align-items:center}
+    .hero h1{font-size:clamp(28px,4.2vw,46px);line-height:1.02}
+    .hero .gradient{background:var(--accent-gradient);-webkit-background-clip:text;color:transparent}
+    .hero p{color:var(--muted);margin:14px 0}
+    .tags{display:flex;gap:10px;flex-wrap:wrap}
+    .tag{background:#f6f8ff;color:var(--accent1);padding:8px 12px;border-radius:999px;font-weight:800;border:1px solid rgba(124,58,237,0.08)}
+    .cta{display:flex;gap:12px;margin-top:18px;flex-wrap:wrap}
+
+    .showreel{border-radius:16px;overflow:hidden;background:var(--accent-gradient);aspect-ratio:9/16;max-width:420px;position:relative;box-shadow:0 18px 60px rgba(124,58,237,0.12);cursor:pointer}
+    .showreel img{width:100%;height:100%;object-fit:cover;display:block}
+    .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:76px;height:76px;border-radius:999px;background:rgba(0,0,0,0.48);display:flex;align-items:center;justify-content:center;color:#fff;font-size:24px}
+    .badge{position:absolute;left:12px;top:12px;background:rgba(255,255,255,0.9);padding:6px 10px;border-radius:999px;font-weight:800}
+
+    /* Skills / software */
+    .skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+    .card{background:var(--card);padding:14px;border-radius:12px;border:1px solid var(--glass-border)}
+
+    .software-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:12px}
+    .software-card{padding:14px;border-radius:12px;background:linear-gradient(180deg,#fff,#fbfbff);border:1px solid var(--glass-border);display:flex;flex-direction:column;gap:8px;transform:translateY(12px);opacity:0}
+    .software-meta{display:flex;gap:8px;flex-wrap:wrap}
+    .chip{background:#f3f4f6;padding:6px 8px;border-radius:999px;font-weight:700;font-size:13px}
+
+    /* Work (videos) */
+    .tabs{display:flex;gap:10px;margin-bottom:18px}
+    .tab{padding:8px 12px;border-radius:10px;border:1px solid #eef2ff;background:transparent;font-weight:800;cursor:pointer}
+    .tab.active{background:var(--accent-gradient);color:#fff}
+
+    /* unified grid used by long / short / insta display — responsive */
+    .reel-grid{display:grid;grid-template-columns:repeat(3, minmax(250px, 1fr));gap:18px}
+    .reel-grid .video-card{display:flex;flex-direction:column}
+
+    .video-card{border-radius:12px;overflow:hidden;border:1px solid rgba(0,0,0,0.06);background:#fff;cursor:pointer;transition:transform .2s}
+    .video-card:hover{transform:translateY(-8px)}
+
+    /* responsive thumbnail system: keep same aspect for shorts and insta previews */
+    .video-thumb{width:100%;position:relative;overflow:hidden;background:#eee}
+    /* long: 16:9 */
+    .video-thumb.long{padding-top:56.25%}
+    /* vertical: 9:16 -> padding-top = (16/9)*100% */
+    .video-thumb.portrait{padding-top:177.78%}
+    .video-thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center center}
+
+    /* instagram embed adjustments: adapt when blockquote replaced by iframe */
+    .instagram-card{padding:6px;background:#fff;border-radius:12px;border:1px solid #eef2ff;overflow:hidden;display:flex;flex-direction:column;align-items:center}
+    .instagram-card > .instagram-wrapper{width:100%;}
+    .instagram-card blockquote.instagram-media{margin:0!important;max-width:100% !important}
+    .instagram-card iframe{max-width:100% !important;width:100% !important}
+
+    /* contact */
+    .contact-grid{display:grid;grid-template-columns:1fr 320px;gap:20px}
+    .contact-form input,.contact-form textarea{width:100%;padding:12px;border-radius:10px;border:1px solid #eef2ff}
+    .contact-side{padding:14px;border-radius:12px;border:1px solid var(--glass-border);background:#fff;display:flex;flex-direction:column;gap:10px}
+    .contact-link{color:var(--accent1);font-weight:800;text-decoration:none}
+
+    footer{padding:28px 0;text-align:center;color:#9aa7b8;background:#07101a}
+
+    /* responsive */
+    @media (max-width:1100px){
+      .reel-grid{grid-template-columns:repeat(2,minmax(220px,1fr));}
+    }
+    @media (max-width:720px){
+      .hero{grid-template-columns:1fr}
+      main{margin-top:100px}
+      .contact-grid{grid-template-columns:1fr}
+      nav{padding:0 16px}
+      .brand-text{display:none}
+      .reel-grid{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Loading -->
+  <div id="loading" style="position:fixed;inset:0;background:#fff;display:flex;align-items:center;justify-content:center;z-index:2000">
+    <div style="text-align:center">
+      <div style="font-weight:900;background:var(--accent-gradient);-webkit-background-clip:text;color:transparent;font-size:28px;margin-bottom:10px">ATUL KUMAR</div>
+      <div style="width:220px;height:6px;background:#eef2ff;border-radius:6px;overflow:hidden"><div id="lp" style="height:100%;width:0;background:linear-gradient(90deg,var(--accent1),var(--accent2))"></div></div>
+    </div>
+  </div>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <div class="brand" role="banner">
+        <div class="logo" aria-hidden="true">AK</div>
+        <div class="brand-text">
+          <div class="name">Atul Kumar</div>
+          <div class="role">Video Editor • Motion Designer</div>
+        </div>
+      </div>
+
+      <div class="nav-actions" role="navigation" aria-label="Main">
+        <div class="nav-links">
+          <a href="#home">Home</a>
+          <a href="#about">About</a>
+          <a href="#work">Work</a>
+          <a href="#software">Software</a>
+          <a href="#contact">Contact</a>
+        </div>
+
+        <!-- Resume download & social -->
+        <div style="display:flex;gap:8px;align-items:center;margin-left:12px">
+          <a class="cta-btn btn-outline" href="./AtulKumar(Resume).pdf" download>Download Resume</a>
+          <a class="cta-btn btn-primary" href="#contact">Contact</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <!-- HERO -->
+    <section id="home" class="hero" aria-labelledby="hero-title">
+      <div>
+        <h1 id="hero-title">Video editing for creators & brands — <span class="gradient">story-first, launch-ready</span></h1>
+        <p>I edit YouTube episodes, vertical shorts and event highlights — clean deliverables, thoughtful color grading.</p>
+
+        <div class="tags" aria-hidden="true">
+          <span class="tag">4+ years experience</span>
+          <span class="tag">Premiere • After Effects</span>
+          <span class="tag">YouTube • Reels • TikTok</span>
+        </div>
+
+        <div class="cta">
+          <a class="cta-btn btn-primary" href="#work">Watch portfolio</a>
+          <a class="cta-btn btn-outline" href="/mnt/data/AtulKumar(Resume).pdf" download>Download Resume</a>
+        </div>
+
+        <div style="margin-top:22px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px">
+          <div class="card"><strong>YouTube Content</strong><div style="color:var(--muted);margin-top:6px">Long-form episodes, shorts & series</div></div>
+          <div class="card"><strong>Color Grading</strong><div style="color:var(--muted);margin-top:6px">Filmic looks, brand consistency</div></div>
+        </div>
+      </div>
+
+      <div>
+        <div class="showreel" id="mainShowreel" role="button" aria-label="Open showreel">
+          <img id="mainShowImg" src="https://img.youtube.com/vi/sOwHTs4L-_c/maxresdefault.jpg" alt="Showreel thumbnail (Atul Kumar)">
+          <div class="badge">Showreel</div>
+          <div class="play">▶</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <h3 class="section-title">About My Work</h3>
+      <div class="section-sub">Professional video editing services tailored for modern creators and brands</div>
+
+      <div style="display:grid;grid-template-columns:1fr 360px;gap:18px;align-items:start">
+        <div>
+          <p style="margin-top:0;color:var(--muted)">I create polished video content for YouTube channels, social platforms and brands — from long-form episodes to vertical shorts and event highlights. I focus on fast turnarounds, consistent color grading and clean audio mixes.</p>
+
+          <div style="margin-top:14px;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px">
+            <div class="card"><strong>Event Highlights</strong><div style="color:var(--muted);margin-top:6px">Cinematic highlights that preserve key moments</div></div>
+            <div class="card"><strong>Corporate Videos</strong><div style="color:var(--muted);margin-top:6px">Presentations, training and brand content</div></div>
+            <div class="card"><strong>Sound Design</strong><div style="color:var(--muted);margin-top:6px">Tight mixes, ambience and clarity</div></div>
+          </div>
+        </div>
+
+        <aside style="padding:14px;border-radius:12px;border:1px solid var(--glass-border);background:#fff;display:flex;flex-direction:column;gap:10px">
+          <div><strong>Experience</strong></div>
+          <div style="font-weight:800">Freelance — Video Editor <span style="font-weight:600;color:var(--muted)">Present</span></div>
+          <div style="color:var(--muted);font-size:14px">Working with creators and brands on YouTube series, short-form content and corporate media. End-to-end post-production including editing, grade and final deliverables.</div>
+
+          <div style="height:8px"></div>
+
+          <div style="font-weight:800">Sr. Video Editor — Brand Bulls <span style="font-weight:600;color:var(--muted)">2022 — 2023</span></div>
+          <div style="color:var(--muted);font-size:14px">Led post-production for brand campaigns, mentored junior editors, coordinated delivery schedules and maintained brand visual standards.</div>
+
+          <div style="height:8px"></div>
+
+          <div style="font-weight:800">Video Editor — Paper Thoughts <span style="font-weight:600;color:var(--muted)">2021 — 2022</span></div>
+          <div style="color:var(--muted);font-size:14px">Produced long-form episodes and short social clips, handled graphics, sound design and export workflows for multiple platforms.</div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- SOFTWARE -->
+    <section id="software">
+      <h3 class="section-title">Software & Tools</h3>
+      <div class="section-sub">Main tools I use — rendered from a static list</div>
+      <div class="software-grid" id="softwareGrid" aria-live="polite"></div>
+    </section>
+
+    <!-- WORK -->
+    <section id="work">
+      <h3 class="section-title">Selected Work</h3>
+      <div class="section-sub">Portfolio — click any thumbnail to open</div>
+
+      <div class="tabs" role="tablist" aria-label="Portfolio tabs">
+        <button class="tab active" data-tab="long" aria-selected="true">Long Form</button>
+        <button class="tab" data-tab="short" aria-selected="false">YouTube Shorts</button>
+        <button class="tab" data-tab="insta" aria-selected="false">Instagram Reels</button>
+      </div>
+
+      <div id="long" class="reel-grid" aria-live="polite"></div>
+      <div id="short" class="reel-grid" style="display:none" aria-live="polite"></div>
+      <div id="insta" class="reel-grid" style="display:none" aria-live="polite"></div>
+
+      <!-- Links-only backup section -->
+      <!-- <div id="linksOnly" style="margin-top:22px">
+        <h4 style="margin-bottom:8px">Links (open in new tab)</h4>
+        <div id="linksList" style="display:flex;flex-wrap:wrap;gap:8px"></div>
+      </div> -->
+
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <h3 class="section-title">Let's Work Together</h3>
+      <div class="section-sub">Ready to bring your project to life? Tell me about it below.</div>
+
+      <!-- <div class="contact-grid">
+        <div>
+          <form class="contact-form" id="contactForm" aria-label="Contact form">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+              <input name="name" placeholder="Your name" required aria-label="Your name">
+              <input name="email" placeholder="Your email" required aria-label="Your email">
+            </div>
+            <input name="project" placeholder="Project type" style="margin-top:10px" required aria-label="Project type">
+            <textarea name="message" rows="6" placeholder="Tell me about your project" style="margin-top:10px" required aria-label="Project description"></textarea>
+            <div style="margin-top:10px"><button class="cta-btn btn-primary" type="submit">Send Message</button></div>
+          </form>
+        </div> -->
+
+        <aside class="contact-side" aria-label="Contact details">
+          <div><strong>Contact</strong></div>
+          <div><i class="fa-solid fa-phone"></i> &nbsp;<a class="contact-link" href="tel:+919876543210">+91 99888 21791</a></div>
+          <div><i class="fa-solid fa-envelope"></i> &nbsp;<a class="contact-link" href="mailto:atul.lourmar1797@gmall.com ">atul.lourmar1797@gmall.com </a></div>
+          <div><i class="fa-brands fa-linkedin"></i> &nbsp;<a class="contact-link" href="https://www.linkedin.com/in/atul-kumar97/" target="_blank" rel="noopener">linkedin.com/in/atul-kumar97/</a></div>
+          <div style="margin-top:8px;color:var(--muted)">I reply fast — typically within 24 hours.</div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <!-- Video modal -->
+  <div class="video-modal" id="videoModal" aria-hidden="true" style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(2,6,23,0.8);z-index:1400;visibility:hidden;opacity:0;transition:all .22s">
+    <div id="videoModalContent" style="width:95%;max-width:1000px;aspect-ratio:16/9;background:#000;border-radius:12px;overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center">
+      <button id="closeModal" style="position:absolute;right:16px;top:12px;z-index:10;background:rgba(255,255,255,0.12);border:none;color:#fff;width:40px;height:40px;border-radius:50%">×</button>
+      <iframe id="videoFrame" src="" style="width:100%;height:100%;border:0" allowfullscreen title="Portfolio video"></iframe>
+    </div>
+  </div>
+
+  <footer>
+    <div style="max-width:1200px;margin:0 auto;padding:22px 20px;color:#9aa7b8">© 2025 Atul Kumar — Professional Video Editor</div>
+  </footer>
+
+  <script>
+    // Loading animation + init
+    try{ gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);}catch(e){console.warn(e)}
+    window.addEventListener('load', ()=>{gsap.to('#lp',{width:'100%',duration:1.1,ease:'power2.out',onComplete:()=>{gsap.to('#loading',{opacity:0,duration:.35,display:'none',onComplete:()=>{document.getElementById('loading').style.display='none';init();}})}})});
+
+    // Software/tools (static list)
+    const TOOLS = [
+      {name:'Adobe Premiere Pro', use:'Editing & timeline assembly', exp:'5+ yrs', cat:'Editing'},
+      {name:'Adobe After Effects', use:'Motion graphics & VFX', exp:'4+ yrs', cat:'Motion'},
+      {name:'DaVinci Resolve', use:'Color grading & finishing', exp:'3+ yrs', cat:'Color'},
+      {name:'Adobe Photoshop', use:'Thumbnails & assets, compositing', exp:'5+ yrs', cat:'Design'},
+      {name:'Adobe Illustrator', use:'Vector assets & thumbnails', exp:'3+ yrs', cat:'Design'}
+    ];
+
+    function escapeHtml(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+    function renderTools(){
+      const grid = document.getElementById('softwareGrid');
+      grid.innerHTML='';
+      TOOLS.forEach((t,i)=>{
+        const el = document.createElement('div'); el.className='software-card';
+        el.innerHTML = `
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div style="font-weight:800">${escapeHtml(t.name)}</div>
+            <div style="font-size:13px;color:var(--muted)">${escapeHtml(t.exp)}</div>
+          </div>
+          <div class="software-usage" style="color:var(--muted);font-size:14px">${escapeHtml(t.use)}</div>
+          <div class="software-meta"><span class="chip">${escapeHtml(t.cat)}</span></div>
+        `;
+        grid.appendChild(el);
+        gsap.to(el,{opacity:1,y:0,duration:0.45,delay:i*0.06,ease:'power2.out'});
+      });
+    }
+
+    // portfolio links (user-provided)
+    const longFormLinks = [
+      "https://youtu.be/Hxi8zM4mC5Q",
+      "https://youtu.be/PfjN02iG0iI",
+      "https://youtu.be/G1XVNh4wpQ4",
+      "https://youtu.be/-BaW_48jvKM",
+      "https://youtu.be/ipwUfL_wvVQ",
+      "https://youtu.be/VyE7kFRFQ5o?si=mbKWKAsM942iaj3G",
+      "https://youtu.be/uVNiX-zysTI?si=oIvdsbvVFKXkKy4-",
+      "https://youtu.be/_-KOs_S80Ic?si=wA2_M98Zv2dcGlTc"
+    ];
+
+    const shortYouTubeLinks = [
+      "https://youtube.com/shorts/mUnyeeQze90?si=5ORx5e4nqY1sivGQ",
+      "https://youtube.com/shorts/sOwHTs4L-_c?si=dOinU_shL7sCGZ_n"
+    ];
+
+    const instagramLinks = [
+      "https://www.instagram.com/reel/DIWLi06yysN/",
+      "https://www.instagram.com/reel/DFh78z3u-wR/",
+      "https://www.instagram.com/reel/DOGc-NeD49a/",
+      "https://www.instagram.com/reel/C-8HXmdPEQZ/"
+    ];
+
+    // helper to extract YouTube ID robustly
+    function getYoutubeID(url){
+      try{
+        const u = new URL(url);
+        if(u.hostname.includes('youtu.be')) return u.pathname.slice(1).split('?')[0];
+        if(u.hostname.includes('youtube.com')){
+          if(u.pathname.startsWith('/shorts/')) return u.pathname.split('/').pop();
+          const qp = u.searchParams;
+          if(qp.get('v')) return qp.get('v');
+          const parts = u.pathname.split('/');
+          return parts[parts.length-1] || null;
+        }
+      }catch(e){}
+      return null;
+    }
+
+    // load instagram embed script (idempotent)
+    function ensureInstagramScript(callback){
+      if(window.instgrm && window.instgrm.Embeds){
+        try{ window.instgrm.Embeds.process(); }catch(e){}
+        if(callback) callback();
+        return;
+      }
+      if(document.getElementById('ig-embed-js')){
+        document.getElementById('ig-embed-js').addEventListener('load', ()=>{ try{ window.instgrm.Embeds.process(); }catch(e){} if(callback) callback(); });
+        return;
+      }
+      const s = document.createElement('script');
+      s.id = 'ig-embed-js';
+      s.async = true;
+      s.src = 'https://www.instagram.com/embed.js';
+      s.onload = ()=>{ try{ window.instgrm.Embeds.process(); }catch(e){} if(callback) callback(); };
+      s.onerror = ()=>{ console.warn('Instagram embed script failed to load'); if(callback) callback(); };
+      document.body.appendChild(s);
+    }
+
+    function buildGrid(){
+      const longGrid = document.getElementById('long');
+      const shortGrid = document.getElementById('short');
+      const instaGrid = document.getElementById('insta');
+      longGrid.innerHTML = '';
+      shortGrid.innerHTML = '';
+      instaGrid.innerHTML = '';
+
+      longFormLinks.forEach((link,i)=>{
+        const id = getYoutubeID(link);
+        const thumb = id ? `https://img.youtube.com/vi/${id}/maxresdefault.jpg` : 'https://picsum.photos/seed/long'+i+'/800/450';
+        const card = document.createElement('div'); card.className='video-card';
+        card.innerHTML = `
+          <div class="video-thumb long"><img src="${thumb}" alt="Long form ${i+1}"></div>
+          <div class="video-info"><strong>Long Form — Project ${i+1}</strong><div style="color:var(--muted);margin-top:6px">${escapeHtml(link)}</div></div>
+        `;
+        card.addEventListener('click', ()=>openVideoModalByUrl(link));
+        longGrid.appendChild(card);
+      });
+
+      shortYouTubeLinks.forEach((link,i)=>{
+        const id = getYoutubeID(link);
+        const thumbCandidates = id ? [`https://img.youtube.com/vi/${id}/maxresdefault.jpg`,`https://img.youtube.com/vi/${id}/hqdefault.jpg`] : [`https://picsum.photos/seed/short${i}/600/900`];
+        const card = document.createElement('div'); card.className='video-card';
+        card.innerHTML = `
+          <div class="video-thumb portrait">
+            <img data-src="${thumbCandidates[0]}" src="${thumbCandidates[0]}" alt="Short ${i+1}" onerror="(function(el){ if(el.dataset.fallback==='1') return; el.dataset.fallback='1'; el.src='${thumbCandidates[1]||thumbCandidates[0]}'; })(this)">
+          </div>
+          <div class="video-info"><strong>Short — YouTube Shorts</strong><div style="color:var(--muted);margin-top:6px">${escapeHtml(link)}</div></div>
+        `;
+        card.addEventListener('click', ()=>openVideoModalByUrl(link));
+        shortGrid.appendChild(card);
+      });
+
+      // Instagram embeds: render cards that match the same grid sizing
+      instagramLinks.forEach((link,i)=>{
+        const instCard = document.createElement('div'); instCard.className='instagram-card';
+        instCard.style.width='100%';
+
+        // sanitize permalink: remove tracking params
+        try{ const u=new URL(link); u.search=''; link = u.toString(); }catch(e){}
+
+        const wrapper = document.createElement('div'); wrapper.className='instagram-wrapper';
+        wrapper.style.width='100%'; wrapper.style.display='flex'; wrapper.style.justifyContent='center';
+
+        const block = document.createElement('blockquote');
+        block.className = 'instagram-media';
+        block.setAttribute('data-instgrm-permalink', link);
+        block.setAttribute('data-instgrm-version', '14');
+        block.style.margin = '0'; block.style.padding = '0 0 12px 0';
+
+        // fallback link text (will be replaced by IG script when available)
+        block.innerHTML = `
+          <a href="${escapeHtml(link)}" target="_blank" rel="noopener" style="display:block;padding:12px 0;text-align:center;text-decoration:none;color:inherit">View on Instagram</a>
+        `;
+
+        wrapper.appendChild(block);
+        const caption = document.createElement('div');
+        caption.style.padding='8px'; caption.style.fontSize='13px'; caption.style.color='var(--muted)';
+        caption.innerHTML = `<strong>Instagram Reel</strong><div style="margin-top:6px;word-break:break-all">${escapeHtml(link)}</div>`;
+
+        instCard.appendChild(wrapper);
+        instCard.appendChild(caption);
+        instaGrid.appendChild(instCard);
+      });
+
+      // trigger instagram embed processing (idempotent)
+      ensureInstagramScript(()=>{
+        try{ if(window.instgrm && window.instgrm.Embeds) window.instgrm.Embeds.process(); }catch(e){console.warn(e)}
+      });
+
+      // build links-only list for backup / quick open
+      const linksList = document.getElementById('linksList');
+      if (linksList) {
+        linksList.innerHTML = '';
+        const allLinks = [...longFormLinks, ...shortYouTubeLinks, ...instagramLinks];
+        allLinks.forEach(l => {
+          const a = document.createElement('a');
+          a.href = l;
+          a.target = '_blank';
+          a.rel = 'noopener';
+          a.style.cssText = 'padding:8px 12px;border-radius:8px;background:#fff;border:1px solid #eef2ff;display:inline-block;text-decoration:none;color:var(--accent1);font-weight:700';
+          a.innerText = (l.includes('instagram.com') ? 'IG Reel' : l.includes('/shorts/') ? 'YouTube Short' : 'Long Form') + ' • Open';
+          linksList.appendChild(a);
+        });
+      }
+    }
+
+    // modal open by url (handles YouTube & other links)
+    function openVideoModalByUrl(url){
+      const iframe = document.getElementById('videoFrame');
+      const content = document.getElementById('videoModalContent');
+      let embed = url;
+      const yid = getYoutubeID(url);
+      const isShort = /\/shorts\//.test(url);
+      if(yid){
+        embed = `https://www.youtube.com/embed/${yid}?autoplay=1&rel=0`;
+      } else if(url.includes('instagram.com')){
+        window.open(url, '_blank', 'noopener');
+        return;
+      }
+
+      // compute modal size so portrait shorts look correct and match instagram card feel
+      const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+      const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
+      if(isShort){
+        const h = Math.min(vh * 0.85, 1000);
+        const w = Math.min(vw * 0.95, Math.round(h * (9/16)));
+        content.style.width = w + 'px';
+        content.style.height = h + 'px';
+      } else {
+        const w = Math.min(vw * 0.9, 1200);
+        const h = Math.round(w * 9/16);
+        content.style.width = w + 'px';
+        content.style.height = h + 'px';
+      }
+
+      iframe.src = embed;
+      const modal = document.getElementById('videoModal');
+      modal.style.visibility='visible'; modal.style.opacity='1'; modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden';
+    }
+
+    function closeVideoModal(){ const modal=document.getElementById('videoModal'); const iframe=document.getElementById('videoFrame'); if(iframe) iframe.src=''; modal.style.opacity='0'; modal.style.visibility='hidden'; modal.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
+
+    // init interactions
+    function init(){
+      renderTools();
+      buildGrid();
+
+      // Hero showreel uses first long video (fallback to short if empty)
+      const heroTarget = shortYouTubeLinks[1];
+      if(heroTarget){
+        document.getElementById('mainShowImg').src = (getYoutubeID(heroTarget) ? `https://img.youtube.com/vi/${getYoutubeID(heroTarget)}/maxresdefault.jpg` : 'https://picsum.photos/420/740');
+      }
+
+      document.getElementById('mainShowreel').addEventListener('click', ()=>{
+        if(getYoutubeID(heroTarget)) openVideoModalByUrl(heroTarget);
+        else window.open(heroTarget, '_blank', 'noopener');
+      });
+
+      // reveals
+      gsap.utils.toArray('.section-title').forEach(el=>gsap.fromTo(el,{opacity:0,y:20},{opacity:1,y:0,duration:0.6,scrollTrigger:{trigger:el,start:'top 90%'}}));
+      gsap.utils.toArray('.video-card').forEach((el,i)=>gsap.fromTo(el,{opacity:0,y:20},{opacity:1,y:0,duration:0.6,delay:i*0.04,scrollTrigger:{trigger:el,start:'top 90%'}}));
+
+      // nav smooth scroll
+      document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{ e.preventDefault(); const t=document.querySelector(a.getAttribute('href')); if(t){gsap.to(window,{duration:.8,scrollTo:{y:t,offsetY:72},ease:'power2.inOut'})} }));
+
+      // tabs
+      document.querySelectorAll('.tab').forEach(btn=>btn.addEventListener('click', ()=>{
+        document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        const tab = btn.getAttribute('data-tab');
+        document.getElementById('long').style.display = tab==='long' ? '' : 'none';
+        document.getElementById('short').style.display = tab==='short' ? '' : 'none';
+        document.getElementById('insta').style.display = tab==='insta' ? '' : 'none';
+      }));
+
+      // contact form (no backend)
+      document.getElementById('contactForm').addEventListener('submit', (e)=>{ e.preventDefault(); const btn = e.target.querySelector('button'); const old = btn.textContent; gsap.to(btn,{scale:.96,duration:.08,yoyo:true,repeat:1,onComplete:()=>{btn.textContent='Message Sent!'; setTimeout(()=>{btn.textContent=old; e.target.reset()},1600)}}) });
+
+      // modal handlers
+      document.getElementById('closeModal').addEventListener('click', closeVideoModal);
+      document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeVideoModal(); })
+      document.getElementById('videoModal').addEventListener('click', (e)=>{ if(e.target === document.getElementById('videoModal')) closeVideoModal(); })
+    }
+  </script>
+
+</body>
+</html>
