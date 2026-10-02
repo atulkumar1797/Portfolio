@@ -550,7 +550,12 @@
       .rowdots i{width:8px;height:8px;border-radius:999px;background:rgba(0,0,0,.2);transition:width .35s var(--ease),background .35s}
       .rowdots i.on{width:26px;background:var(--tally)}
       .igcard{scroll-snap-align:start}
-      .igslot,.iggrid .vframe{height:440px} /* keeps the whole block on one phone screen while it is held */
+      /* cards size to the screen so heading, cards, titles and dots all fit above the tab bar while held */
+      .igslot,.iggrid .vframe{height:clamp(270px, calc(100svh - 356px), 460px)}
+      .vertblock .subhead h3{font-size:24px;line-height:1.1}
+      .vertblock .subhead span{display:none}
+      .iggrid .vcard h3{font-size:15px;margin-top:8px}
+      .iggrid .vcard p,.igcap{font-size:12px}
       .iggrid .vcard{scroll-snap-align:start}
     }
     @media (prefers-reduced-motion:reduce){
