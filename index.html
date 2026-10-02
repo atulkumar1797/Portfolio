@@ -56,34 +56,17 @@
     .kin .ln{display:block;overflow:hidden;padding-bottom:.06em}
     .kin .kw{display:inline-block;white-space:nowrap}
 
-    /* ---------- intro: bars, leader, cut ---------- */
-    #intro{position:fixed;inset:0;z-index:2500;background:#000;display:grid;place-items:center;cursor:pointer}
-    #intro .bars{position:absolute;inset:0;display:flex}
-    #intro .bars i{flex:1}
-    #intro .slatetxt{position:absolute;left:50%;bottom:12%;transform:translateX(-50%);background:#000;color:#fff;padding:10px 18px;font-weight:700;font-variation-settings:"wdth" 118;letter-spacing:.04em;white-space:nowrap}
-    #intro .leader{position:absolute;inset:0;display:none;place-items:center;background:#1a1a1a}
-    #intro .dial{width:min(62vmin,520px);aspect-ratio:1;border-radius:50%;position:relative;display:grid;place-items:center;
-      background:conic-gradient(rgba(255,255,255,.22) var(--a,0deg), transparent 0);border:3px solid rgba(255,255,255,.75)}
-    #intro .dial::before,#intro .dial::after{content:"";position:absolute;background:rgba(255,255,255,.75)}
-    #intro .dial::before{left:50%;top:-12%;bottom:-12%;width:2px;transform:translateX(-50%)}
-    #intro .dial::after{top:50%;left:-12%;right:-12%;height:2px;transform:translateY(-50%)}
-    #intro .num{font-size:min(40vmin,340px);font-weight:800;line-height:1;color:#fff;font-variation-settings:"wdth" 75;position:relative;z-index:1}
-    #intro .skiphint{position:absolute;right:20px;bottom:16px;font-size:13px;color:#fff;opacity:.6;mix-blend-mode:difference}
-    #intro .flash{position:absolute;inset:0;background:#fff;opacity:0;z-index:5}
-    /* title card: colour-bar curtain, name with collapsing echoes, timecode and load bar */
-    #intro .title{position:absolute;inset:0;display:none;place-items:center;background:#000;overflow:hidden}
-    #intro .curtain{position:absolute;inset:0;display:flex}
-    #intro .curtain i{flex:1;transform:scaleY(0)}
-    #intro .stack{position:relative;display:grid;place-items:center}
-    #intro .nm{grid-area:1/1;font-size:clamp(72px,19vw,250px);font-weight:800;line-height:.84;color:#fff;letter-spacing:-.01em;text-align:center}
+    /* ---------- intro: the name, a line, then the panel lifts away ---------- */
+    #intro{position:fixed;inset:0;z-index:2500;background:#000;display:grid;place-items:center;cursor:pointer;
+      border-radius:0 0 var(--ir,0px) var(--ir,0px)}
+    #intro .intro-in{display:grid;justify-items:center;gap:20px;padding:0 16px}
+    #intro .nm{font-size:clamp(52px,13vw,170px);font-weight:800;line-height:.9;color:#fff;letter-spacing:-.01em;white-space:nowrap}
     #intro .nm .ln{display:block;overflow:hidden;padding-bottom:.06em}
     #intro .nm .ch{display:inline-block;white-space:pre;font-variation-settings:"wdth" var(--w,100)}
-    #intro .nm.echo{color:transparent;-webkit-text-stroke:1.5px rgba(255,255,255,.75)}
-    #intro .nm.echo .ln{overflow:visible}
-    #intro .meta{position:absolute;left:16px;right:16px;bottom:13%;display:flex;justify-content:center;flex-wrap:wrap;gap:8px 18px;align-items:center;color:#fff;font-weight:700;font-size:15px}
-    #intro .dotr{width:10px;height:10px;border-radius:50%;background:var(--tally);animation:blink 1s steps(1) infinite}
-    #intro .bar5{position:absolute;left:50%;bottom:calc(13% - 26px);width:min(320px,62vw);height:4px;translate:-50% 0;background:rgba(255,255,255,.16);border-radius:4px;overflow:hidden}
-    #intro .bar5 i{display:block;height:100%;width:100%;background:var(--tally);border-radius:4px;transform-origin:left;transform:scaleX(0)}
+    #intro .iline{width:min(420px,70vw);height:2px;border-radius:2px;background:rgba(255,255,255,.14);overflow:hidden}
+    #intro .iline i{display:block;height:100%;background:var(--tally);transform-origin:left;transform:scaleX(0)}
+    #intro .icap{color:rgba(255,255,255,.7);font-size:15px;font-weight:600;letter-spacing:.02em}
+    #intro .skiphint{position:absolute;right:20px;bottom:16px;font-size:13px;color:rgba(255,255,255,.35)}
 
     /* ---------- HUD ---------- */
     .hud{position:fixed;left:0;right:0;top:0;z-index:1000;padding:14px var(--gut);display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:16px;
@@ -310,7 +293,7 @@
     .cursor.play .cdot,.cursor.link .cdot{opacity:0}
 
     /* hero: sticky so the next sheet slides over it */
-    .hero{position:sticky;top:var(--stick,0px);z-index:0;transform-origin:50% 35%}
+    .hero{position:sticky;top:var(--stick,0px);z-index:0;transform-origin:50% 35%;padding-bottom:calc(28px + var(--r4))}
     .hero-dim{position:absolute;inset:0;background:#000;opacity:0;pointer-events:none;z-index:5}
     .hero-top{align-items:center}
     .bigyrs{display:flex;align-items:flex-end;gap:16px;margin-bottom:22px}
@@ -443,9 +426,6 @@
     dialog#player{height:100dvh}
     .pclose{border-radius:999px}
 
-    /* intro opens like an iris */
-    #intro{-webkit-mask-image:radial-gradient(circle at 50% 50%,transparent var(--iris,0vmax),#000 calc(var(--iris,0vmax) + 1px));
-      mask-image:radial-gradient(circle at 50% 50%,transparent var(--iris,0vmax),#000 calc(var(--iris,0vmax) + 1px))}
     .cursor.hide .cdot,.cursor.hide .cring{opacity:0}
     body.has-cursor dialog, body.has-cursor dialog *{cursor:auto}
     body.has-cursor dialog button{cursor:pointer}
@@ -458,6 +438,8 @@
     .igslot .instagram-media,.igslot iframe{position:relative;z-index:1;margin:0!important;min-width:0!important;width:100%!important;max-width:100%!important;border:0!important;box-shadow:none!important;border-radius:var(--r3)!important}
     .igslot blockquote.instagram-media{opacity:0;min-height:560px}
     .iggrid .vframe{aspect-ratio:auto;height:760px}
+    .rowdots{display:none}
+    .joblist{display:none}
     .subhead{flex-wrap:wrap;gap:6px 24px}
     .igcap{display:flex;justify-content:space-between;gap:12px;margin-top:10px;font-size:14px}
     .igcap a{color:var(--graphite)}
@@ -522,7 +504,7 @@
       .tprog{position:absolute;left:0;bottom:0;height:2px;background:var(--tally);width:0}
       .totop{display:none}
       footer{padding-bottom:100px}
-      .hero{padding-top:84px}
+      .hero{padding-top:84px;padding-bottom:calc(82px + 28px + 14px)}
       #name{font-size:25vw}
       .bigyrs .num{font-size:38vw}
       .cta .btn{flex:1;justify-content:center}
@@ -542,9 +524,33 @@
       .vframe.embedded{height:560px}
       .mailpick{min-width:0;width:min(92vw,340px)}
       .scrollcue{font-size:13px}
-      .iggrid{grid-auto-flow:column;grid-template-columns:none;grid-auto-columns:min(88vw,360px);overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:12px}
+      /* the row runs edge to edge so the next card peeks in from the right */
+      .iggrid{grid-auto-flow:column;grid-template-columns:none;grid-auto-columns:84vw;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;
+        margin:18px calc(-1 * var(--gut)) 0;padding:0 var(--gut) 6px;scroll-padding-left:var(--gut);scrollbar-width:none}
+      .iggrid::-webkit-scrollbar{display:none}
+      .iggrid.auto{scroll-snap-type:none}
+      /* career: the timeline sticks while the job cards scroll under it */
+      .nle{position:sticky;top:70px;z-index:3;padding-top:40px}
+      .nle .playhead span{top:8px}
+      .nle .playhead::before{top:33px}
+      .ntrack.a{display:none}
+      .monitor,.scrollcue{display:none}
+      .joblist{display:grid;gap:14px;margin-top:18px}
+      .jobcard{position:relative;overflow:hidden;border-radius:var(--r2);background:#111;border:1px solid var(--rule-d);padding:18px 18px 20px 22px;transition:border-color .35s,background .35s}
+      .jobcard::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--lc)}
+      .jobcard.on{border-color:var(--lc);background:#1a1a1a}
+      .jc-yr{display:inline-block;padding:4px 10px;border-radius:999px;background:var(--lc);color:#000;font-size:12px;font-weight:700}
+      .jobcard h3{font-size:26px;font-weight:800;line-height:1.05;margin-top:10px;font-variation-settings:"wdth" 90}
+      .jc-role{color:var(--tally);font-weight:700;margin-top:4px;font-size:15px}
+      .jobcard ul{list-style:none;display:grid;gap:8px;margin-top:12px;font-size:15px;color:rgba(243,243,240,.82)}
+      .jobcard li{padding-left:18px;position:relative}
+      .jobcard li::before{content:"";position:absolute;left:0;top:.62em;width:8px;height:2px;background:var(--tally)}
+      .vertblock .subhead{margin-top:clamp(40px,8vw,80px)}
+      .rowdots{display:flex;justify-content:center;gap:8px;margin-top:16px}
+      .rowdots i{width:8px;height:8px;border-radius:999px;background:rgba(0,0,0,.2);transition:width .35s var(--ease),background .35s}
+      .rowdots i.on{width:26px;background:var(--tally)}
       .igcard{scroll-snap-align:start}
-      .igslot,.iggrid .vframe{height:720px}
+      .igslot,.iggrid .vframe{height:440px} /* keeps the whole block on one phone screen while it is held */
       .iggrid .vcard{scroll-snap-align:start}
     }
     @media (prefers-reduced-motion:reduce){
@@ -562,21 +568,11 @@
 <a class="skip" href="#work">Skip to work</a>
 
 <div id="intro" aria-hidden="true">
-  <div class="bars"></div>
-  <div class="slatetxt">Atul Kumar &nbsp; Portfolio 2026</div>
-  <div class="leader"><div class="dial"><span class="num">3</span></div></div>
-  <div class="title">
-    <div class="curtain"></div>
-    <div class="stack">
-      <div class="nm echo"><span class="ln">Atul</span><span class="ln">Kumar</span></div>
-      <div class="nm echo"><span class="ln">Atul</span><span class="ln">Kumar</span></div>
-      <div class="nm echo"><span class="ln">Atul</span><span class="ln">Kumar</span></div>
-      <div class="nm main"><span class="ln">Atul</span><span class="ln">Kumar</span></div>
-    </div>
-    <div class="meta"><span class="dotr"></span><span>Filmmaker and video editor</span><span class="tnum itc">00:00:00:00</span></div>
-    <div class="bar5"><i></i></div>
+  <div class="intro-in">
+    <div class="nm"><span class="ln">Atul Kumar</span></div>
+    <div class="iline"><i></i></div>
+    <p class="icap">Filmmaker and video editor</p>
   </div>
-  <div class="flash"></div>
   <div class="skiphint">Click to skip</div>
 </div>
 
@@ -652,8 +648,11 @@
       <div class="subhead"><h3>Earlier long-form</h3><span id="moreCount"></span></div>
       <div class="grid more" id="moreGrid"></div>
 
-      <div class="subhead"><h3>YouTube Shorts and Instagram Reels</h3><span>Vertical edits that play right here</span></div>
-      <div class="iggrid" id="igGrid"></div>
+      <div class="vertblock" id="vertBlock">
+        <div class="subhead"><h3>YouTube Shorts and Instagram Reels</h3><span>Vertical edits that play right here</span></div>
+        <div class="iggrid" id="igGrid"></div>
+        <div class="rowdots" id="rowDots" aria-hidden="true"></div>
+      </div>
     </div>
   </section>
 
@@ -696,12 +695,13 @@
         <div class="playhead" id="nlePH"><span class="tnum" id="nlePHt">2021</span></div>
       </div>
       <div class="scrollcue" id="careerCue"><span class="mouse" aria-hidden="true"><i></i></span><span>Keep scrolling to play through five years</span><span class="chev" aria-hidden="true"><i></i><i></i></span></div>
+      <div class="joblist" id="jobList"></div>
       <div class="monitor" id="monitor" aria-live="polite">
         <div class="swap" id="monA"><div class="yr tnum" id="mYr">2021</div><div class="who" id="mWho"></div><div class="role" id="mRole"></div></div>
         <ul class="swap" id="mList"></ul>
       </div>
     </div>
-    <div class="wrap" style="padding-top:24px;padding-bottom:0">
+    <div class="wrap" style="padding-top:24px;padding-bottom:calc(var(--r4) + 80px)">
       <div class="tools">
         <div><b>Premiere Pro</b><span>Edit and finishing</span></div>
         <div><b>After Effects</b><span>Motion graphics</span></div>
@@ -804,7 +804,6 @@ const LC = { brand:'var(--l-brand)', event:'var(--l-event)', doc:'var(--l-doc)',
 const yt = (id, f='hqdefault') => `https://i.ytimg.com/vi/${id}/${f}.jpg`;
 const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const pad = n => String(n).padStart(2,'0');
-const tc = fr => { const s = Math.floor(fr/30); return `${pad(Math.floor(s/3600))}:${pad(Math.floor(s/60)%60)}:${pad(s%60)}:${pad(fr%30)}`; };
 const bars = el => { el.innerHTML = BARS.map(c => `<i style="background:${c}"></i>`).join(''); return $$('i', el); };
 
 // YouTube answers a missing thumbnail with a 120px grey placeholder, not an error.
@@ -997,6 +996,20 @@ const IG_MOTION = `<span class="iggrad"></span><span class="igwrap"><span class=
   <svg class="iglogo" viewBox="0 0 100 100"><rect class="ig-sq" x="12" y="12" width="76" height="76" rx="22" pathLength="100"/><circle class="ig-lens" cx="50" cy="50" r="18" pathLength="100"/><circle class="ig-dot" cx="71" cy="29" r="5"/></svg></span>
   <strong>Instagram reel</strong><small>Loading the reel</small></span>`;
 
+// Position dots for the vertical row on phones.
+function rowHints(){
+  const row = $('#igGrid'), dots = $('#rowDots');
+  const items = [...row.children];
+  dots.innerHTML = items.map(() => '<i></i>').join('');
+  const marks = $$('i', dots);
+  const step = () => (items[1] ? items[1].offsetLeft - items[0].offsetLeft : 1) || 1;
+  const update = () => {
+    const i = Math.min(items.length - 1, Math.round(row.scrollLeft / step()));
+    marks.forEach((m, k) => m.classList.toggle('on', k === i));
+  };
+  row.addEventListener('scroll', update, { passive:true }); update();
+}
+
 /* ================= PLAYER ================= */
 const dlg = $('#player'), pbox = $('#pbox');
 let lastFocus = null;
@@ -1039,6 +1052,11 @@ function buildCareer(){
     d.innerHTML = `<em>${j.from} to ${j.to === NOW ? 'now' : j.to}</em><strong>${esc(j.who)}</strong>`;
     lane.appendChild(d);
   });
+  // phones read the jobs as cards; the playhead follows the card being read
+  $('#jobList').innerHTML = JOBS.map(j => `<article class="jobcard" style="--lc:${LC[j.kind]}">
+      <span class="jc-yr">${j.from} to ${j.to === NOW ? 'now' : j.to}</span>
+      <h3>${esc(j.who)}</h3><p class="jc-role">${esc(j.role)}</p>
+      <ul>${j.pts.map(t => `<li>${esc(t)}</li>`).join('')}</ul></article>`).join('');
 }
 function jobAt(y){ return Math.max(0, JOBS.findIndex(j => y >= j.from && y < j.to + (j.to === NOW ? 1 : 0))); }
 let curJob = -1;
@@ -1203,7 +1221,25 @@ function scrollMotion(){
     ScrollTrigger.create({ trigger:'#careerStage', pin:true, start:'top top', end:'+=1100', scrub:.4, onUpdate: s => setCareer(s.progress) });
   });
   mm.add('(max-width: 760px)', () => {
-    ScrollTrigger.create({ trigger:'#nle', start:'top 70%', end:'bottom 20%', scrub:.6, onUpdate: s => setCareer(s.progress) });
+    // Shorts and reels: the block holds while scrolling down slides the row through every card
+    const row = $('#igGrid');
+    const dist = () => Math.max(0, row.scrollWidth - row.clientWidth);
+    row.classList.add('auto');
+    const cards = [...row.children];
+    const stops = () => cards.map(c => Math.min(1, (c.offsetLeft - cards[0].offsetLeft) / (dist() || 1)));
+    ScrollTrigger.create({ trigger:'#vertBlock', pin:true, start:'top 70px', end:() => '+=' + dist(), scrub:true, invalidateOnRefresh:true,
+      snap:{ snapTo: v => stops().reduce((a, b) => Math.abs(b - v) < Math.abs(a - v) ? b : a), duration:{ min:.2, max:.5 }, delay:.08, ease:'power2.inOut' },
+      onUpdate: s => { row.scrollLeft = s.progress * dist(); } });
+    const ph = { p:0 };
+    $$('.jobcard').forEach((card, i) => {
+      const j = JOBS[i], mid = Math.min(j.from + (j.to - j.from) / 2, NOW);
+      ScrollTrigger.create({ trigger:card, start:'top 62%', end:'bottom 62%',
+        onToggle: s => {
+          card.classList.toggle('on', s.isActive);
+          if (s.isActive) gsap.to(ph, { p:(mid - SPAN[0]) / (NOW - SPAN[0]), duration:.7, ease:'power3.out', overwrite:true, onUpdate: () => setCareer(ph.p) });
+        } });
+    });
+    return () => row.classList.remove('auto');
   });
   // created after the pin so their positions include its spacer
   gsap.from('.tools div', { y:40, opacity:0, duration:.8, ease:'expo.out', stagger:.08, scrollTrigger:{ trigger:'.tools', start:'top 92%' } });
@@ -1213,51 +1249,19 @@ function scrollMotion(){
 /* ================= INTRO ================= */
 function intro(done){
   const el = $('#intro');
-  let seen = false; try { seen = sessionStorage.getItem('ak-intro') === '1'; } catch(e){}
-  if (!G || RM || seen){ el.remove(); done(); return; }
-  try { sessionStorage.setItem('ak-intro','1'); } catch(e){}
-  const barEls = bars($('.bars', el)), curtain = bars($('.curtain', el));
-  const dial = $('.dial', el), num = $('.num', el), leader = $('.leader', el), flash = $('.flash', el), title = $('.title', el);
-  const main = kinSplit($('.nm.main', el)), echoes = $$('.nm.echo', el);
-  const tcIn = $('.itc', el), clock = { f:0 };
+  // plays on every visit; skipped only when motion is reduced or GSAP failed to load
+  if (!G || RM){ el.remove(); done(); return; }
+  const chars = kinSplit($('.nm', el)), line = $('.iline i', el), cap = $('.icap', el);
   const tl = gsap.timeline({ onComplete: () => el.remove() });
-
-  // 1. colour bars rise with the slate, then tear apart into the leader
-  tl.from(barEls, { scaleY:0, transformOrigin:'bottom', duration:.35, ease:'expo.out', stagger:.03 })
-    .from($('.slatetxt', el), { opacity:0, duration:.2 }, .1)
-    .set(leader, { display:'grid' }, .55)
-    .to(barEls, { yPercent:i => (i % 2 ? -105 : 105), duration:.35, ease:'expo.in', stagger:.02 }, .5)
-    .to($('.slatetxt', el), { opacity:0, duration:.15 }, .5);
-
-  // 2. leader countdown
-  ['3','2','1'].forEach((n, i) => {
-    tl.call(() => { num.textContent = n; }, null, .8 + i*.34)
-      .fromTo(dial, { '--a':'0deg' }, { '--a':'360deg', duration:.34, ease:'none' }, .8 + i*.34);
-  });
-
-  // 3. flash frame, then the title card: a colour-bar curtain sweeps through as the name lands
-  tl.to(flash, { opacity:1, duration:.04 }, 1.82)
-    .set(title, { display:'grid' }, 1.86)
-    .to(flash, { opacity:0, duration:.14 }, 1.86)
-    .fromTo(curtain, { scaleY:0, transformOrigin:'top' }, { scaleY:1, duration:.28, ease:'expo.in', stagger:.03 }, 1.86)
-    .to(curtain, { scaleY:0, transformOrigin:'bottom', duration:.32, ease:'expo.out', stagger:.03 }, 2.2)
-    .fromTo(main, { yPercent:115, '--w':125 }, { yPercent:0, '--w':100, duration:1.1, ease:'expo.out', stagger:.03 }, 2.2);
-  // outline echoes fan out above and below, then collapse into the name
-  echoes.forEach((e, k) => {
-    const dir = k % 2 ? -1 : 1, d = (k + 1) * 26;
-    tl.fromTo(e, { y:dir * d * 2.2, scale:1 + (k + 1) * .05, opacity:0 }, { opacity:.9, duration:.2 }, 2.2 + k * .05)
-      .to(e, { y:0, scale:1, opacity:0, duration:.9, ease:'expo.inOut' }, 2.4 + k * .07);
-  });
-  tl.from($('.meta', el), { y:20, opacity:0, duration:.6, ease:'expo.out' }, 2.45)
-    .to(clock, { f:150, duration:1.1, ease:'power1.inOut', onUpdate: () => { tcIn.textContent = tc(Math.round(clock.f)); } }, 2.45)
-    .to($('.bar5 i', el), { scaleX:1, duration:1.1, ease:'power2.inOut' }, 2.45);
-
-  // 4. hand over: the name pushes in as an iris opens onto the site
-  tl.call(done, null, 3.5)
-    .to($('.stack', el), { scale:1.25, opacity:0, duration:.7, ease:'expo.in' }, 3.4)
-    .to([$('.meta', el), $('.bar5', el)], { opacity:0, duration:.3 }, 3.4)
-    .fromTo(el, { '--iris':'0vmax' }, { '--iris':'90vmax', duration:.95, ease:'expo.inOut' }, 3.5);
-
+  // the name rises in and widens, a red line draws under it
+  tl.fromTo(chars, { yPercent:110, '--w':62 }, { yPercent:0, '--w':100, duration:1, ease:'expo.out', stagger:.04 }, .15)
+    .to(line, { scaleX:1, duration:1.1, ease:'power2.inOut' }, .3)
+    .from(cap, { y:12, opacity:0, duration:.6, ease:'expo.out' }, .6)
+  // the name lifts away and the black panel slides up with rounded corners
+    .to(chars, { yPercent:-110, duration:.5, ease:'expo.in', stagger:.02 }, 1.9)
+    .to([$('.iline', el), cap], { opacity:0, duration:.3 }, 1.9)
+    .call(done, null, 2.3)
+    .to(el, { yPercent:-100, '--ir':'48px', duration:.8, ease:'expo.inOut' }, 2.25);
   el.addEventListener('click', () => tl.progress(1));
   addEventListener('keydown', function k(){ tl.progress(1); removeEventListener('keydown', k); });
 }
@@ -1356,7 +1360,7 @@ if (G){ gsap.registerPlugin(ScrollTrigger); ScrollTrigger.config({ ignoreMobileR
 buildMarquee(); buildBelts();
 waveform($('#wave'), 'rgba(43,183,164,.9)', 2.2);
 waveform($('#wave2'), 'rgba(43,183,164,.85)', 0);
-buildWork(); buildCareer(); buildStatement(); buildCredits();
+buildWork(); rowHints(); buildCareer(); buildStatement(); buildCredits();
 mailPicker(); cursor();
 $('#workHint').textContent = HOVER
   ? 'Move your mouse across any thumbnail to flip through moments from that film. Click to play it here.'
