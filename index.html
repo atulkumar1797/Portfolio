@@ -457,6 +457,8 @@
     .igslot .ig-bg{position:absolute;inset:0;display:grid;place-items:center;overflow:hidden}
     .igslot .instagram-media,.igslot iframe{position:relative;z-index:1;margin:0!important;min-width:0!important;width:100%!important;max-width:100%!important;border:0!important;box-shadow:none!important;border-radius:var(--r3)!important}
     .igslot blockquote.instagram-media{opacity:0;min-height:560px}
+    .iggrid .vframe{aspect-ratio:auto;height:760px}
+    .subhead{flex-wrap:wrap;gap:6px 24px}
     .igcap{display:flex;justify-content:space-between;gap:12px;margin-top:10px;font-size:14px}
     .igcap a{color:var(--graphite)}
 
@@ -542,7 +544,8 @@
       .scrollcue{font-size:13px}
       .iggrid{grid-auto-flow:column;grid-template-columns:none;grid-auto-columns:min(88vw,360px);overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:12px}
       .igcard{scroll-snap-align:start}
-      .igslot{height:720px}
+      .igslot,.iggrid .vframe{height:720px}
+      .iggrid .vcard{scroll-snap-align:start}
     }
     @media (prefers-reduced-motion:reduce){
       .rec,.roll,.ig-bg .sig{animation:none}
@@ -586,7 +589,7 @@
     <a href="#about">About</a>
     <a href="#career">Career</a>
     <a href="#contact">Contact</a>
-    <a class="cvlink" href="Atul%20Kumar%20Resume%202026.pdf" download="Atul Kumar Resume 2026.pdf">Résumé</a>
+    <a class="cvlink" href="Atul%20Kumar%20Resume%202026.pdf" target="_blank" rel="noopener">Résumé</a>
   </nav>
 </header>
 
@@ -617,7 +620,7 @@
             <svg viewBox="0 0 200 200" aria-hidden="true"><defs><path id="rbPath" d="M100,100 m-80,0 a80,80 0 1,1 160,0 a80,80 0 1,1 -160,0"/></defs><text><textPath href="#rbPath" textLength="500">Watch the work <tspan fill="#FF2B2B">●</tspan> Watch the work <tspan fill="#FF2B2B">●</tspan></textPath></text></svg>
             <span class="core"></span>
           </a>
-          <a class="btn" href="Atul%20Kumar%20Resume%202026.pdf" download="Atul Kumar Resume 2026.pdf">Download résumé</a>
+          <a class="btn" href="Atul%20Kumar%20Resume%202026.pdf" target="_blank" rel="noopener">View résumé</a>
         </div>
       </div>
     </div>
@@ -649,10 +652,7 @@
       <div class="subhead"><h3>Earlier long-form</h3><span id="moreCount"></span></div>
       <div class="grid more" id="moreGrid"></div>
 
-      <div class="subhead"><h3>YouTube Shorts</h3><span>Vertical edits</span></div>
-      <div class="rail" id="shortRail"></div>
-
-      <div class="subhead"><h3>Instagram reels</h3><span>They play right here</span></div>
+      <div class="subhead"><h3>YouTube Shorts and Instagram Reels</h3><span>Vertical edits that play right here</span></div>
       <div class="iggrid" id="igGrid"></div>
     </div>
   </section>
@@ -729,7 +729,7 @@
           </div>
           <div class="links">
             <a class="btn" href="https://www.linkedin.com/in/atul-kumar97/" target="_blank" rel="noopener">LinkedIn</a>
-            <a class="btn" href="Atul%20Kumar%20Resume%202026.pdf" download="Atul Kumar Resume 2026.pdf">Download résumé</a>
+            <a class="btn" href="Atul%20Kumar%20Resume%202026.pdf" target="_blank" rel="noopener">View résumé</a>
           </div>
         </div>
         <div class="credits" aria-label="Clients and collaborators">
@@ -959,7 +959,7 @@ function buildWork(){
   WORK.forEach((w, i) => (i < FEATURED ? feat : more).appendChild(card(w)));
   $('#moreCount').textContent = `${WORK.length - FEATURED} films`;
 
-  const rail = $('#shortRail');
+  const rail = $('#igGrid'); // Shorts and reels share one grid
   SHORTS.filter(s => s.yt).forEach(s => {
     const el = document.createElement('article');
     el.className = 'vcard';
